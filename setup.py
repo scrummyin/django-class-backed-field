@@ -36,7 +36,7 @@ info = convert_to_str(info)
 setup_kwargs = {
     "author": "Brian Faherty",
     "author_email": "anothergenericuser@gmail.com",
-    "url": "https://github.com/scrummyin/django-class-backed-field",
+    "url": "https://github.com/themotleyfool/django-class-backed-field",
     "packages": find_packages(),
     "include_package_data": True,
     "version": version,
