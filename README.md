@@ -1,4 +1,4 @@
-# django-classbacked-field
+# django-class-backed-field
 
 This field will allow you to store a string in the database and passes it as the first and only arg to a constructor.  The best use I've found for this so far is the abbility to store the id of an object in the database, and then make a rest call using that id.  
 
