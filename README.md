@@ -7,6 +7,8 @@ This is an example of a models.py you could create in your application.
 
 
 ```python
+from class_backed_field.fields import ClassBackedField
+
 class OverSimplfiedGistPost(object):
     def __init__(self, gist_id):
         json_of_gist = requests.get("https://api.github.com/gists/%s" % gist_id).json()
@@ -14,13 +16,23 @@ class OverSimplfiedGistPost(object):
         self.text = [file_data['content'] for filename, file_data in json_of_gist['files'].items()]
         self.browser_url = json_of_gist['html_url']
 
-
 id_retriving_lambda = lambda x: str(x.id)
-
 
 class RemoteGist(models.Model):
     user = fields.ForgeinKey(User)
-    gist = fields.ClassBackedField(represents=OverSimplfiedGistPost, db_value_generator=id_retriving_lambda, max_length=255)
+    gist = ClassBackedField(represents=OverSimplfiedGistPost, db_value_generator=id_retriving_lambda, max_length=255)
 ```
-I could then search this model using the id of the gist.  Also when it will get the latest inforation form github everytime I use the object.  
 
+The model RemoteGist now is searchable using the id of the gist, or an instance of the gist.  Also it will get the latest inforation form github everytime I use the object.
+
+Examples of how usage:
+
+
+```python
+my_gist = RemoteGist.objects.create(gist="5867996")
+retrived_gist_from_string = RemoteGist.objects.get(gist="5867996")
+instance_of_gist = OverSimplfiedGistPost("5867996")
+retrived_gist_from_object = RemoteGist.object.get(gist=instance_of_gist)
+
+print retrived_gist_from_string.gist.browser_url
+```

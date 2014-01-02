@@ -7,3 +7,4 @@ local_settings.py
 *.egg
 *.tar.gz
 test.db
+build/
